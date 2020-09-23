@@ -1,0 +1,79 @@
+
+Sub-String Count
+
+This function searches the passed string for occurences of the
+specified sub-string. It has the ability to make case-sensitive
+or case-insensitive searches. It can also perform whole-word-only
+matching using a unique IsDelim function included in this module.
+
+SubStrCount will return the number of matches or zero if none.
+
+Extended Functionality
+
+This SubStrCount implementation offers extended functionality
+through the use of the optional lHitLimit parameter. This allows
+it to be used in a similar way to other token style functions.
+
+By setting the lHitLimit parameter to any positive value allows
+you to limit how many matches are found in the current call, and
+the value of the lStartPos parameter *is modified* to identify the
+start position in the search string of the last sub-string found
+(or zero if none found).
+
+In this case, the function will return a value equal to or less
+than the value of the lHitLimit parameter, and zero if none found.
+
+Using this feature you can limit the number of matches found, but
+then make subsequent calls to SubStrCount by passing lStartPos + 1
+(or lStartPos + Len(sSubStr)) to step through the search process
+as needed, and stop when the function returns with zero.
+
+Whole-Word-Only
+
+By default, all non-alphabetic characters (with the exception of
+underscores) are automatically treated as word delimiters when
+performing whole-word-only seaches and do not need to be specified.
+
+As only alphabetic characters are treated as non-delimiters you
+can specify custom non-delimiters, that is, any character(s) can
+be specified as part of whole words and therefore be treated as
+non-delimiters.
+
+To make numerical characters part of whole words and so set
+as non-delimiters *by default* add this line to the IsDelim
+function's select case statement:
+
+      Case 48 To 57: IsDelim = False
+
+To specify custom/run-time changes to the list of delimiters make
+a call to the public SetDelim subroutine and add character(s) to
+be handled as part of whole words (or as delimiters):
+
+      SetDelim "1234567890", False
+
+Remember, all non-alphabetic characters are already treated as
+word delimiters and so do not need to be specified through a
+call to SetDelim ???, True. Also, alphabetic characters can be
+treated as word delimiters through a call to SetDelim "a", True.
+
+Most delimiter implementations build a list/array to hold all
+delimiters, but this modules approach is *much* faster.
+
+Notes
+
+Passing lStartPos with a value < 1 will not cause an error; it
+will default to 1 and start the search at the first character in
+the search string.
+
+The lStartPos parameter will be reset appropriately if lHitLimit
+is specified > zero, but will be *left unchanged* if lHitLimit
+is omitted or <= zero.
+
+Free Usage
+
+You may use this code in any way you wish, but please respect
+my copyright. But, if you can modify this function in some way
+to speed it up or to add extra features then you can claim it
+as your own!
+
+Rd - crYptic but cRaZy!                                     :)
